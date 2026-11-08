@@ -510,3 +510,25 @@ input[type="checkbox"] { width: 14px; height: 14px; accent-color: var(--mint); c
   .toast { transition: none; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
+
+/* Back to the template gallery. Fixed so it stays reachable at any scroll depth. */
+.back-gallery {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(12, 18, 28, 0.88);
+  color: var(--text);
+  font: 500 12.5px/1 var(--sans);
+  text-decoration: none;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+}
+.back-gallery:hover { border-color: var(--mint); color: var(--mint); }
+.back-gallery:focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; }
