@@ -308,7 +308,7 @@
       button.type = "button";
       button.className = "text-link review-open";
       button.dataset.id = payment.id;
-      button.setAttribute("aria-label", "Review " + payment.account);
+      button.setAttribute("aria-label", "Review payment for " + payment.account);
       button.textContent = "Review payment";
       button.addEventListener("click", function () {
         openDialog(payment.id);

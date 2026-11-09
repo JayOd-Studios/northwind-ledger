@@ -1,0 +1,16 @@
+{
+  "name": "northwind-ledger-sample",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dev-only browser QA for the self-contained Northwind Ledger portfolio sample.",
+  "scripts": {
+    "test": "playwright test",
+    "test:a11y": "playwright test tests/a11y.spec.js",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.65.0"
+  }
+}

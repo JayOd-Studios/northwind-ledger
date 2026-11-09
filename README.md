@@ -9,9 +9,10 @@ every figure is fictional.
 Fictional company. Do not present it as client work.
 
 - Sector: Fintech dashboard / internal tool
-- Stack: static HTML, CSS and vanilla JavaScript. No build step, no webfonts, no CDN, no tracking.
+- Runtime: static HTML, CSS and vanilla JavaScript. No runtime dependencies, build step, webfonts, CDN or tracking.
+- Dev-only QA: Playwright and axe-core. Neither is loaded by the deployed sample.
 - Run: `python3 -m http.server 3000` in this folder.
-- Files: `index.html`, `styles.css`, `ledger.js`, `main.js`, `theme-boot.js`, `check.mjs`, `README.md`.
+- Files: `index.html`, `styles.css`, `ledger.js`, `main.js`, `theme-boot.js`, `check.mjs`, `package.json`, `package-lock.json`, `playwright.config.js`, `tests/`, `README.md`.
 
 ## The idea
 
@@ -105,6 +106,8 @@ not an audit trail.
 
 ## Checks
 
+Runtime checks (zero dependencies):
+
 ```sh
 node check.mjs
 node --check ledger.js
@@ -112,16 +115,31 @@ node --check theme-boot.js
 node --check main.js
 ```
 
-`check.mjs` has no dependencies. It verifies the IDs shared by `index.html` and
-`main.js`, local asset paths, the CSP and absence of inline script/style, the
-ledger shape and totals, colour contrast in both token decks (4.5:1 text, 3:1
-control borders), target sizes, external requests and the README's own claims.
-It is a guardrail, not a substitute for a validator or a browser pass.
+`check.mjs` verifies the IDs shared by `index.html` and `main.js`, local asset
+paths, the CSP and absence of inline script/style, the ledger shape and totals,
+colour contrast in both token decks (4.5:1 text, 3:1 control borders), target
+sizes, external requests, the README's claims and the dev-only QA boundary. It
+is a guardrail, not a substitute for a validator or a browser pass.
 
-For the visual/behavioural pass, use the W3C Nu validator, axe DevTools or the
-axe CLI, and a real browser at a narrow width. Check that the dialog traps focus,
-that sorting and filtering keep focus, that CSV downloads, that reload restores
-the statuses, and that the light theme survives a reload.
+Browser QA (dev-only):
+
+```sh
+npm install
+npx playwright install chromium
+npm test
+npm run test:a11y
+```
+
+`npm test` starts a Python static server on port 4173 and runs the desktop and
+mobile projects. The interaction suite covers the queue, undo, persistence,
+search, filtering, bulk matching, the native dialog, chart tabs and keyboard
+inspection, CSV download, theme persistence, the inert mobile drawer and the
+absence of console errors or external requests. The axe suite scans both themes
+and the open matching dialog against WCAG A/AA. In a Linux CI container, use
+`npx playwright install --with-deps chromium` once instead of the plain install.
+
+This package is intentionally dev-only. The deployed page does not load
+Playwright, axe or any other third-party code.
 
 ## Limits
 

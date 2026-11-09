@@ -23,6 +23,9 @@ const js = read("main.js");
 const ledgerSource = read("ledger.js");
 const boot = read("theme-boot.js");
 const readme = read("README.md");
+const pkg = JSON.parse(read("package.json"));
+const gitignore = read(".gitignore");
+const playwrightConfig = read("playwright.config.js");
 
 let passed = 0;
 let failed = 0;
@@ -305,6 +308,20 @@ check("README names the data source", /ledger\.js/.test(readme));
 check("README names the theme boot script", /theme-boot\.js/.test(readme));
 check("README names the checker", /check\.mjs/.test(readme));
 check("README does not claim 44px-ish targets", !/44px-ish/i.test(readme));
+
+/* ---------- Dev-only QA ---------- */
+
+group("Dev-only QA");
+
+check("runtime dependencies stay empty", Object.keys(pkg.dependencies || {}).length === 0);
+check("Playwright is a dev dependency", Boolean(pkg.devDependencies && pkg.devDependencies["@playwright/test"]));
+check("axe-core is a dev dependency", Boolean(pkg.devDependencies && pkg.devDependencies["@axe-core/playwright"]));
+check("test scripts exist", Boolean(pkg.scripts && pkg.scripts.test && pkg.scripts["test:a11y"]));
+check("QA output is ignored", /node_modules/.test(gitignore) && /test-results/.test(gitignore) && /playwright-report/.test(gitignore));
+check("Playwright starts the static server", /webServer/.test(playwrightConfig) && /python3 -m http\.server/.test(playwrightConfig));
+check("Playwright covers desktop and mobile", /name: "desktop"/.test(playwrightConfig) && /name: "mobile"/.test(playwrightConfig));
+check("interaction tests are present", read("tests/northwind.spec.js").includes("mobile drawer"));
+check("axe tests are present", read("tests/a11y.spec.js").includes("WCAG A/AA"));
 
 /* ---------- Result ---------- */
 
