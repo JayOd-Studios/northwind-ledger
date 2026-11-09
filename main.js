@@ -253,4 +253,10 @@
   }
 
   updateCounts();
+
+  /* Each GitHub Pages deploy is a standalone sample, so there is no gallery to return to. */
+  if (location.hostname.endsWith(".github.io")) {
+    var galleryLink = document.querySelector(".back-gallery");
+    if (galleryLink) galleryLink.remove();
+  }
 })();
