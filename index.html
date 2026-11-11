@@ -183,7 +183,7 @@
 
           <details class="chart-table">
             <summary>View the numbers</summary>
-            <div class="table-scroll">
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Net movement values table">
               <table>
                 <caption id="chartTableCaption">Net movement, last nine weeks</caption>
                 <thead><tr><th scope="col">Period</th><th scope="col" class="right">Net</th></tr></thead>
@@ -229,7 +229,8 @@
           </div>
         </div>
 
-        <div class="table-scroll">
+        <p class="table-hint tiny muted" id="tableHint">Swipe sideways for date, amount and status.</p>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Payments ledger table">
           <table>
             <caption class="sr">Payments in the ledger. Sort by a column, filter by status, or open a row’s status to change it.</caption>
             <thead>

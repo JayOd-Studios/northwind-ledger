@@ -888,6 +888,8 @@ main {
 .bulk-actions { display: flex; flex-wrap: wrap; gap: 14px; }
 
 .table-scroll { overflow-x: auto; }
+.table-scroll:focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; }
+.table-hint { display: none; }
 table {
   width: 100%;
   min-width: 720px;
@@ -1194,6 +1196,7 @@ input[type="checkbox"] {
   th:first-child, td:first-child { padding-left: 16px; }
   th:last-child, td:last-child { padding-right: 16px; }
   .table-foot { padding-left: 16px; padding-right: 16px; }
+  .table-hint { display: block; padding: 0 16px 6px; }
   .activity-list li { grid-template-columns: 84px minmax(0, 1fr); }
 }
 
